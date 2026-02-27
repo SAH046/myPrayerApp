@@ -1,36 +1,22 @@
-# Prayer Guide & Assistant App
+# 🕌 Prayer Guide & Assistant
 
-A modern, immersive Android application designed to assist users in learning and performing Islamic prayers (Salat) and prerequisites like Wudu (ablution). The app features a clean, edge-to-edge Material 3 interface with multilingual support and Text-to-Speech integration.
+A modern, immersive Android app for learning and performing Islamic prayers. **Vibe coded** with high-fidelity design and smooth animations.
 
-## 🚀 Features
+## ✨ Features
+- **Reference**: Detailed guides for 2, 3, and 4 Rakat prayers.
+- **Guided Session**: Interactive real-time guidance with TTS.
+- **Wudu**: Comprehensive illustrated guide for ritual purification.
+- **Multilingual**: Native support for German and Turkish.
+- **Immersive UI**: Edge-to-edge design with a floating pill navigation bar.
 
-- **Step-by-Step Prayer Reference**: Detailed guides for different prayer variants (2, 3, and 4 Rakat) with Arabic text, transliteration, and translations.
-- **Guided Prayer Session**: An interactive mode that walks you through the prayer in real-time using Text-to-Speech (TTS) and visual indicators.
-- **Wudu Guide**: A comprehensive, illustrated guide to performing ritual purification.
-- **Multilingual Support**: Fully localized in **German** and **Turkish**.
-- **Immersive UI**: Modern "Floating Pill" navigation bar and edge-to-edge design that utilizes the full screen.
-- **Predictive Back Support**: Smooth navigation with the latest Android system gestures.
+## 🛠 Tech Stack
+Kotlin, Jetpack Compose (Material 3), Shared Transitions, TTS API.
 
-## 🛠 Technologies
-
-- **Language**: Kotlin
-- **UI Framework**: Jetpack Compose (Material 3)
-- **Navigation**: Compose Animated Content & Shared Element Transitions
-- **Speech**: Android TextToSpeech (TTS) API
-- **Architecture**: Modern Android development practices with CompositionLocal and State management.
-
-## 📱 Screenshots
-
+## 📱 Screenshot
 <p align="center">
-  <img src="app/src/main/res/drawable/screenshot.png" width="300" title="App Screenshot">
+  <img src="app/src/main/res/drawable/screenshot.png" width="300">
 </p>
 
-## 🛠 Getting Started
-
-1. Clone this repository.
-2. Open the project in **Android Studio (Ladybug or newer)**.
-3. Sync Gradle and run the `:app` module on an emulator or physical device.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🚀 Quick Start
+1. Open in **Android Studio**.
+2. Sync and Run.
