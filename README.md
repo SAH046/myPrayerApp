@@ -1,5 +1,7 @@
 # 🕌 Prayer Guide & Assistant
 
+[![Build APK](https://github.com/OWNER/REPOSITORY/actions/workflows/build.yml/badge.svg)](https://github.com/OWNER/REPOSITORY/actions/workflows/build.yml)
+
 A modern, immersive Android app for learning and performing Islamic prayers. **Vibe coded** with high-fidelity design and smooth animations.
 
 ## ✨ Features
@@ -20,3 +22,5 @@ Kotlin, Jetpack Compose (Material 3), Shared Transitions, TTS API.
 ## 🚀 Quick Start
 1. Open in **Android Studio**.
 2. Sync and Run.
+
+> **Note**: You can find the latest **debug APK** in the "Actions" tab of this repository under the latest successful build artifacts.
