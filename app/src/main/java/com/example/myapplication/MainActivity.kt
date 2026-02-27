@@ -3,6 +3,7 @@ package com.example.myapplication
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.PredictiveBackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -40,7 +42,19 @@ import kotlinx.coroutines.CancellationException
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        
+        // Ensure the system bars are fully transparent and icons adapt to light/dark mode
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            ),
+            navigationBarStyle = SystemBarStyle.auto(
+                android.graphics.Color.TRANSPARENT,
+                android.graphics.Color.TRANSPARENT
+            )
+        )
+        
         setContent {
             var currentLanguage by rememberSaveable { mutableStateOf(AppLanguage.GERMAN) }
             
@@ -83,7 +97,7 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
     // Correct implementation of PredictiveBackHandler
     PredictiveBackHandler(enabled = currentDestination != AppDestinations.SCHRITT_FUER_SCHRITT) { progress ->
         try {
-            progress.collect { /* Optional: handle progress for custom animation */ }
+            progress.collect { }
             currentDestination = AppDestinations.SCHRITT_FUER_SCHRITT
         } catch (_: CancellationException) {
             // Handle cancellation if needed
@@ -124,11 +138,67 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        bottomBar = {
-            // Subdued Floating Pill Navigation Bar
+        // Use theme background to ensure system bars area matches the app theme
+        containerColor = MaterialTheme.colorScheme.background,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { showLanguageDialog = true },
+                modifier = Modifier.padding(bottom = 100.dp) // Move up to avoid overlap with pill nav
+            ) {
+                Icon(Icons.Default.Translate, contentDescription = "Language")
+            }
+        }
+    ) { innerPadding ->
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Content layer: uses top padding for status bar but fills to the bottom
+            AnimatedContent(
+                targetState = currentDestination,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = innerPadding.calculateTopPadding()),
+                transitionSpec = {
+                    val direction = if (targetState.ordinal > initialState.ordinal)
+                        AnimatedContentTransitionScope.SlideDirection.Left
+                    else
+                        AnimatedContentTransitionScope.SlideDirection.Right
+
+                    slideIntoContainer(
+                        towards = direction,
+                        animationSpec = tween(400)
+                    ) togetherWith slideOutOfContainer(
+                        towards = direction,
+                        animationSpec = tween(400)
+                    )
+                },
+                label = "TabTransition"
+            ) { destination ->
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    when (destination) {
+                        AppDestinations.MITBETEN -> PrayerLearnScreen(
+                            tts = tts,
+                            isTtsReady = isTtsReady,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        AppDestinations.SCHRITT_FUER_SCHRITT -> PrayerReferenceScreen(
+                            tts = tts,
+                            isTtsReady = isTtsReady,
+                            onStartPray = { currentDestination = AppDestinations.MITBETEN },
+                            modifier = Modifier.fillMaxSize()
+                        )
+                        AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
+                    }
+                }
+            }
+
+            // Navigation layer: Floating Pill Bar overlay
             Box(
                 modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
+                    // Adds space for the system navigation bar without blocking content behind it
                     .windowInsetsPadding(WindowInsets.navigationBars)
                     .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
             ) {
@@ -141,6 +211,7 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                 ) {
                     NavigationBar(
                         modifier = Modifier
+                            .clip(CircleShape)
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(
@@ -181,51 +252,6 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                             )
                         }
                     }
-                }
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { showLanguageDialog = true },
-                modifier = Modifier.padding(bottom = 100.dp) // Move up to avoid overlap with pill nav
-            ) {
-                Icon(Icons.Default.Translate, contentDescription = "Language")
-            }
-        }
-    ) { innerPadding ->
-        AnimatedContent(
-            targetState = currentDestination,
-            modifier = Modifier.padding(innerPadding),
-            transitionSpec = {
-                val direction = if (targetState.ordinal > initialState.ordinal)
-                    AnimatedContentTransitionScope.SlideDirection.Left
-                else
-                    AnimatedContentTransitionScope.SlideDirection.Right
-
-                slideIntoContainer(
-                    towards = direction,
-                    animationSpec = tween(400)
-                ) togetherWith slideOutOfContainer(
-                    towards = direction,
-                    animationSpec = tween(400)
-                )
-            },
-            label = "TabTransition"
-        ) { destination ->
-            Surface(modifier = Modifier.fillMaxSize()) {
-                when (destination) {
-                    AppDestinations.MITBETEN -> PrayerLearnScreen(
-                        tts = tts,
-                        isTtsReady = isTtsReady,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    AppDestinations.SCHRITT_FUER_SCHRITT -> PrayerReferenceScreen(
-                        tts = tts,
-                        isTtsReady = isTtsReady,
-                        onStartPray = { currentDestination = AppDestinations.MITBETEN },
-                        modifier = Modifier.fillMaxSize()
-                    )
-                    AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
                 }
             }
         }

@@ -286,7 +286,7 @@ object CommonSteps {
             title = "Abschluss-Tashahhud",
             posture = "Sitzen",
             description = "Rezitieren Sie den vollständigen Tashahhud und Gebete für den Propheten.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَاد. اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
             transliteration = "At-tahiyyatu lillahi was-salawatu wat-tayyibatu, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuhu, as-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah wa ashhadu anna Muhammadan 'abduhu wa rasuluh. Allahumma salli 'ala Muhammadin wa 'ala ali Muhammad, kama sallayta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammad, kama barakta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid.",
             translation = "Alle Ehrerweisungen gebühren Allah. Friede sei mit dir, o Prophet... Ich bezeuge, dass es keinen Gott gibt außer Allah und Muhammad Sein Gesandter ist. O Allah, segne Muhammad und die Familie von Muhammad, wie Du Abraham und die Familie von Abraham gesegnet hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche. O Allah, gib Muhammad und der Familie von Muhammad Deinen Segen, wie Du Abraham und die Familie von Abraham Deinen Segen gegeben hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche.",
             images = listOf(R.drawable.jalsa),
@@ -630,7 +630,7 @@ fun PrayerStepsListScreen(
 
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 160.dp), // Increased bottom padding
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             itemsIndexed(steps) { index, step ->
@@ -755,7 +755,10 @@ fun PrayerSelectionScreen(
     with(sharedTransitionScope) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             Text(title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 24.dp, top = 16.dp))
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(bottom = 160.dp) // Increased bottom padding
+            ) {
                 items(prayers, key = { it.id }) { prayer ->
                     Card(
                         modifier = Modifier
@@ -875,8 +878,10 @@ fun ActiveStepUI(step: PrayerStep, index: Int, total: Int, onExit: () -> Unit) {
                 } else {
                     Text(text = step.description, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
                 }
+                Spacer(Modifier.height(160.dp)) // Increased space inside the scrollable card
             }
         }
+        // Removed the outer Spacer that was shrinking the card
     }
 }
 

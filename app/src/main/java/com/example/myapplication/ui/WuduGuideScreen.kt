@@ -85,7 +85,7 @@ fun WuduGuideScreen(
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 200.dp), // Increased bottom padding to clear floating nav bar
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             itemsIndexed(steps) { index, step ->

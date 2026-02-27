@@ -177,7 +177,10 @@ fun PrerequisiteSelectionScreen(
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 24.dp, top = 16.dp)
             )
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                contentPadding = PaddingValues(bottom = 120.dp) // Added bottom padding
+            ) {
                 items(items) { item ->
                     Card(
                         modifier = Modifier
