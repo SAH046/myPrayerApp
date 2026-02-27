@@ -35,9 +35,6 @@ import com.example.myapplication.ui.PrayerLearnScreen
 import com.example.myapplication.ui.PrayerReferenceScreen
 import com.example.myapplication.ui.PrerequisitesScreen
 import com.example.myapplication.ui.theme.MyApplicationTheme
-import com.example.myapplication.ui.theme.PastelLavender
-import com.example.myapplication.ui.theme.PastelPeach
-import com.example.myapplication.ui.theme.PastelSkyBlue
 import kotlinx.coroutines.CancellationException
 
 class MainActivity : ComponentActivity() {
@@ -128,7 +125,7 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            // Highly visible Floating Pill Navigation Bar with Gradient
+            // Subdued Floating Pill Navigation Bar
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -147,13 +144,12 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                             .background(
                                 brush = Brush.horizontalGradient(
                                     colors = listOf(
-                                        PastelLavender,
-                                        PastelSkyBlue,
-                                        PastelPeach
+                                        MaterialTheme.colorScheme.surfaceVariant,
+                                        MaterialTheme.colorScheme.secondaryContainer
                                     )
                                 )
                             )
-                            .border(1.dp, Color.White.copy(alpha = 0.5f), CircleShape),
+                            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape),
                         containerColor = Color.Transparent,
                         tonalElevation = 0.dp,
                         windowInsets = WindowInsets(0, 0, 0, 0)
@@ -176,11 +172,11 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                                     )
                                 },
                                 colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = Color(0xFF6A5ACD), // SlateBlue for better contrast on pastel
-                                    selectedTextColor = Color(0xFF6A5ACD),
-                                    unselectedIconColor = Color.Gray,
-                                    unselectedTextColor = Color.Gray,
-                                    indicatorColor = Color.White.copy(alpha = 0.7f)
+                                    selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
+                                    indicatorColor = MaterialTheme.colorScheme.secondaryContainer
                                 )
                             )
                         }
@@ -191,8 +187,6 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showLanguageDialog = true },
-                containerColor = PastelSkyBlue,
-                contentColor = Color(0xFF6A5ACD),
                 modifier = Modifier.padding(bottom = 100.dp) // Move up to avoid overlap with pill nav
             ) {
                 Icon(Icons.Default.Translate, contentDescription = "Language")
