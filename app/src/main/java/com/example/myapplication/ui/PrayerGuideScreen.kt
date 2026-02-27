@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -39,15 +38,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.myapplication.R
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withTimeoutOrNull
 import java.util.*
 import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 enum class AppLanguage(val label: String, val locale: Locale) {
     GERMAN("Deutsch", Locale.GERMAN),
@@ -133,7 +131,7 @@ object CommonSteps {
                 title = "$number. Rekat: Kıyam",
                 posture = "Ayakta durmak",
                 description = "Fatiha suresini" + if (withExtraSura) " ve ek bir sure okuyun." else " okuyun.",
-                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَن. الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ. صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَن. الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّİREKAL MÜSTAKİM. SIRÂTALLEZÎNE EN'AMTE ALEYHİM GAYRİLMAĞDÛBİ ALEYHİM VELEDDÂLLÎN.",
                 transliteration = "Bismillâhirrahmânirrahîm. Elhamdü lillâhi rabbil'alemin. Errahmânirrahîm. Mâliki yevmiddîn. İyyâke na'büdü ve iyyâke neste'în. İhdinessırâtel müstakîm. Sırâtallezîne en'amte aleyhim gayrilmağdûbi aleyhim veleddâllîn.",
                 translation = "Rahman ve Rahim olan Allah'ın adıyla. Hamd, Alemlerin Rabbi Allah'a mahsustur. O, Rahman ve Rahimdir. Hesap ve ceza gününün malikidir. Yalnız Sana ibadet eder ve yalnız Senden yardım dileriz. Bizi doğru yola ilet; kendilerine nimet verdiklerinin yoluna, gazaba uğrayanlarınkine ve sapkınlarınkine değil.",
                 images = listOf(R.drawable.qiyam),
@@ -286,7 +284,7 @@ object CommonSteps {
             title = "Abschluss-Tashahhud",
             posture = "Sitzen",
             description = "Rezitieren Sie den vollständigen Tashahhud und Gebete für den Propheten.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَاد. اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَاد. اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِIDٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
             transliteration = "At-tahiyyatu lillahi was-salawatu wat-tayyibatu, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuhu, as-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah wa ashhadu anna Muhammadan 'abduhu wa rasuluh. Allahumma salli 'ala Muhammadin wa 'ala ali Muhammad, kama sallayta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammad, kama barakta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid.",
             translation = "Alle Ehrerweisungen gebühren Allah. Friede sei mit dir, o Prophet... Ich bezeuge, dass es keinen Gott gibt außer Allah und Muhammad Sein Gesandter ist. O Allah, segne Muhammad und die Familie von Muhammad, wie Du Abraham und die Familie von Abraham gesegnet hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche. O Allah, gib Muhammad und der Familie von Muhammad Deinen Segen, wie Du Abraham und die Familie von Abraham Deinen Segen gegeben hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche.",
             images = listOf(R.drawable.jalsa),
@@ -415,17 +413,22 @@ fun PrayerLearnScreen(
             ttsInstance.stop()
             val cleanText = text.replace(Regex("\\[.*?\\]"), "")
             withTimeoutOrNull(60000L) {
-                suspendCoroutine<Unit> { continuation ->
+                suspendCancellableCoroutine<Unit> { continuation ->
                     val utteranceId = UUID.randomUUID().toString()
                     var resumed = false
                     ttsInstance.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                         override fun onStart(id: String?) {}
                         override fun onDone(id: String?) { if (id == utteranceId && !resumed) { resumed = true; continuation.resume(Unit) } }
+                        @Deprecated("Deprecated in Java")
                         override fun onError(id: String?) { if (id == utteranceId && !resumed) { resumed = true; continuation.resume(Unit) } }
                         override fun onError(id: String?, errorCode: Int) { if (id == utteranceId && !resumed) { resumed = true; continuation.resume(Unit) } }
                     })
                     ttsInstance.language = locale
                     ttsInstance.speak(cleanText, TextToSpeech.QUEUE_FLUSH, Bundle().apply { putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, utteranceId) }, utteranceId)
+                    
+                    continuation.invokeOnCancellation {
+                        ttsInstance.stop()
+                    }
                 }
             }
         } else if (isInspectionMode) { delay(3000L) }
@@ -442,7 +445,7 @@ fun PrayerLearnScreen(
                 transitionState.seekTo(backEvent.progress, targetState = null)
             }
             selectedPrayer = null
-        } catch (e: CancellationException) {
+        } catch (_: CancellationException) {
             transitionState.animateTo(selectedPrayer)
         }
     }
@@ -491,7 +494,6 @@ fun PrayerLearnScreen(
 fun PrayerReferenceScreen(
     tts: TextToSpeech?,
     isTtsReady: Boolean,
-    onStartPray: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedPrayer by remember { mutableStateOf<PrayerConfig?>(null) }
@@ -522,7 +524,7 @@ fun PrayerReferenceScreen(
                 transitionState.seekTo(backEvent.progress, targetState = null)
             }
             selectedPrayer = null
-        } catch (e: CancellationException) {
+        } catch (_: CancellationException) {
             transitionState.animateTo(selectedPrayer)
         }
     }
@@ -753,7 +755,7 @@ fun PrayerSelectionScreen(
     animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     with(sharedTransitionScope) {
-        Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp)) {
             Text(title, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 24.dp, top = 16.dp))
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -836,7 +838,7 @@ fun GuidedPrayerSession(
 @Composable
 fun CountdownUI(value: Int) {
     val lang = LocalAppLanguage.current
-    Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    Column(modifier = Modifier.fillMaxSize().statusBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
         Text(if (lang == AppLanguage.GERMAN) "Bereit machen..." else "Hazırlanın...", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
         Text(if (lang == AppLanguage.GERMAN) "Lege dein Handy vor dich hin." else "Telefonunuzu önünüze koyun.", textAlign = TextAlign.Center, modifier = Modifier.padding(horizontal = 32.dp))
@@ -850,7 +852,7 @@ fun CountdownUI(value: Int) {
 @Composable
 fun ActiveStepUI(step: PrayerStep, index: Int, total: Int, onExit: () -> Unit) {
     val lang = LocalAppLanguage.current
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text(if (lang == AppLanguage.GERMAN) "Schritt ${index + 1} von $total" else "${index + 1}. Adım / $total", style = MaterialTheme.typography.labelLarge)
             IconButton(onClick = onExit) { Icon(Icons.Default.Close, contentDescription = if (lang == AppLanguage.GERMAN) "Beenden" else "Bitir") }

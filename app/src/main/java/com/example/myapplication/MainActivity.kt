@@ -43,7 +43,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Ensure the system bars are fully transparent and icons adapt to light/dark mode
         enableEdgeToEdge(
             statusBarStyle = SystemBarStyle.auto(
                 android.graphics.Color.TRANSPARENT,
@@ -94,14 +93,11 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
         }
     }
 
-    // Correct implementation of PredictiveBackHandler
     PredictiveBackHandler(enabled = currentDestination != AppDestinations.SCHRITT_FUER_SCHRITT) { progress ->
         try {
             progress.collect { }
             currentDestination = AppDestinations.SCHRITT_FUER_SCHRITT
-        } catch (_: CancellationException) {
-            // Handle cancellation if needed
-        }
+        } catch (_: CancellationException) { }
     }
 
     if (showLanguageDialog) {
@@ -138,19 +134,17 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        // Use theme background to ensure system bars area matches the app theme
         containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { showLanguageDialog = true },
-                modifier = Modifier.padding(bottom = 100.dp) // Move up to avoid overlap with pill nav
+                modifier = Modifier.padding(bottom = 100.dp)
             ) {
                 Icon(Icons.Default.Translate, contentDescription = "Language")
             }
         }
     ) { innerPadding ->
         Box(modifier = Modifier.fillMaxSize()) {
-            // Content layer: uses top padding for status bar but fills to the bottom
             AnimatedContent(
                 targetState = currentDestination,
                 modifier = Modifier
@@ -185,7 +179,6 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                         AppDestinations.SCHRITT_FUER_SCHRITT -> PrayerReferenceScreen(
                             tts = tts,
                             isTtsReady = isTtsReady,
-                            onStartPray = { currentDestination = AppDestinations.MITBETEN },
                             modifier = Modifier.fillMaxSize()
                         )
                         AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
@@ -193,12 +186,10 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                 }
             }
 
-            // Navigation layer: Floating Pill Bar overlay
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    // Adds space for the system navigation bar without blocking content behind it
                     .windowInsetsPadding(WindowInsets.navigationBars)
                     .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
             ) {
