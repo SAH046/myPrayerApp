@@ -242,6 +242,7 @@ fun MemorizationItemsList(
 fun MemorizationItemCard(item: MemorizationItem, onSpeak: (String) -> Unit) {
     var isExpanded by remember { mutableStateOf(false) }
     val lang = LocalAppLanguage.current
+    val hasArabic = item.arabic.isNotEmpty()
 
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -281,14 +282,22 @@ fun MemorizationItemCard(item: MemorizationItem, onSpeak: (String) -> Unit) {
             ) {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = item.arabic,
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.End,
-                            modifier = Modifier.weight(1f)
-                        )
-                        IconButton(onClick = { onSpeak(item.arabic) }) {
-                            Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        if (hasArabic) {
+                            Text(
+                                text = item.arabic,
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.End,
+                                modifier = Modifier.weight(1f)
+                            )
+                            IconButton(onClick = { onSpeak(item.arabic) }) {
+                                Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                            }
+                        } else {
+                            Text(
+                                text = if (lang == AppLanguage.GERMAN) "Anzeigen" else "Gör",
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.weight(1f)
+                            )
                         }
                     }
 
@@ -323,7 +332,7 @@ fun MemorizationItemCard(item: MemorizationItem, onSpeak: (String) -> Unit) {
                         }
                     } else {
                         Text(
-                            text = if (lang == AppLanguage.GERMAN) "Details (Aussprache & Übersetzung) anzeigen..." else "Detayları (Okunuş & Tercüme) göster...",
+                            text = if (lang == AppLanguage.GERMAN) "Details anzeigen..." else "Detayları göster...",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(top = 4.dp)
@@ -358,7 +367,7 @@ fun getMemorizationData(lang: AppLanguage) = when (lang) {
                 MemorizationItem(
                     title = "Sure Al-Ikhlas",
                     note = "Kurze Sure - Wird oft in den ersten beiden Einheiten rezitiert",
-                    arabic = "قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+                    arabic = "قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُOLَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
                     transliteration = "Qul huwal-lahu ahad. Allahus-samad. Lam yalid wa lam yulad. Wa lam yakun lahu kufuwan ahad.",
                     translation = "Sag: Er ist Allah, ein Einziger. Allah, der Überlegene. Er hat nicht gezeugt und ist nicht gezeugt worden. Und niemand ist Ihm jemals gleich."
                 )
@@ -435,6 +444,74 @@ fun getMemorizationData(lang: AppLanguage) = when (lang) {
                     translation = "Friede sei mit euch und die Barmherzigkeit Allahs."
                 )
             )
+        ),
+        MemorizationCategory(
+            id = "structure",
+            categoryName = "Gebetsablauf (Struktur)",
+            items = listOf(
+                MemorizationItem(
+                    title = "2-Einheiten Gebet (z.B. Fajr)",
+                    note = "Vollständiger Ablauf",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        Vorbereitung: Absicht im Herzen fassen und zur Qibla (Mekka) wenden.
+                        
+                        Einheit 1:
+                        1. Takbeer: Allahu Akbar sagen.
+                        2. Stehen (Qiyam): Al-Fatihah + kurze Sure rezitieren.
+                        3. Verbeugung (Ruku): 3x Subhana Rabbiyal-Adhim.
+                        4. Aufrichten: Sami' Allahu... dann Rabbana wa lakal-hamd.
+                        5. Sujud: 3x Subhana Rabbiyal-A'la.
+                        6. Sitzen: Rabbighfir li.
+                        7. Sujud: 3x Subhana Rabbiyal-A'la.
+                        
+                        Einheit 2:
+                        8. Aufstehen für die zweite Einheit.
+                        9. Stehen (Qiyam): Al-Fatihah + kurze Sure rezitieren.
+                        10. Alle Bewegungen (Ruku bis Sujud) wiederholen.
+                        
+                        Abschluss:
+                        11. Letztes Sitzen: Tashahhud & Salawat rezitieren.
+                        12. Tasleem: Kopf nach rechts, dann nach links drehen und grüßen.
+                    """.trimIndent()
+                ),
+                MemorizationItem(
+                    title = "3-Einheiten Gebet (z.B. Maghrib)",
+                    note = "Struktureller Ablauf",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        Einheit 1 & 2: Wie beim 2-Einheiten Gebet.
+                        Nach Einheit 2: Erstes Sitzen - Nur Tashahhud rezitieren (kein Salawat).
+                        
+                        Einheit 3:
+                        1. Aufstehen.
+                        2. Nur Al-Fatihah rezitieren (keine zusätzliche Sure).
+                        3. Alle Bewegungen (Ruku bis Sujud) ausführen.
+                        
+                        Abschluss:
+                        1. Letztes Sitzen: Vollständiger Tashahhud & Salawat.
+                        2. Tasleem: Das Gebet beenden.
+                    """.trimIndent()
+                ),
+                MemorizationItem(
+                    title = "4-Einheiten Gebet (Dhuhr, Asr, Isha)",
+                    note = "Struktureller Ablauf",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        Einheit 1 & 2: Wie gewohnt (mit Al-Fatihah + Sure).
+                        Nach Einheit 2: Erstes Sitzen - Nur Tashahhud rezitieren.
+                        
+                        Einheit 3 & 4:
+                        1. Aufstehen.
+                        2. Nur Al-Fatihah rezitieren (keine zusätzliche Sure).
+                        3. Alle Bewegungen (Ruku bis Sujud) ausführen.
+                        
+                        Abschluss:
+                        1. Letztes Sitzen: Vollständiger Tashahhud & Salawat.
+                        2. Tasleem: Das Gebet beenden.
+                    """.trimIndent()
+                )
+            )
         )
     )
     AppLanguage.TURKISH -> listOf(
@@ -459,8 +536,8 @@ fun getMemorizationData(lang: AppLanguage) = when (lang) {
                 MemorizationItem(
                     title = "İhlas Suresi",
                     note = "Kısa Sure - Genellikle ilk iki rekatta okunur",
-                    arabic = "قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَم_ ي_و_ل_د_ْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
-                    transliteration = "Kul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.",
+                    arabic = "قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَم_ ي_و_ل_d_ْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+                    transliteration = "Kul hüvellâhü ehad. Allâhüssamed. Lem yelid ve len yûled. Ve len yekün lehû küfüven ehad.",
                     translation = "De ki: O Allah birdir. Allah Samed'dir. O, doğurmamış ve doğurulmamıştır. Onun hiçbir dengi yoktur."
                 )
             )
@@ -524,7 +601,7 @@ fun getMemorizationData(lang: AppLanguage) = when (lang) {
                 MemorizationItem(
                     title = "Salli-Barik",
                     note = "Sadece son oturuşta okunur",
-                    arabic = "اللَّhُمَّ صَلِّ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا صَلِّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hَمِيدٌ مَجِIDٌ، اللَّhُمَّ بَارِكْ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا bârekte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd.",
+                    arabic = "اللَّhُمَّ صَلِّ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا صَلِّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hَمِيدٌ مَGِIDٌ، اللَّhُمَّ بَارِكْ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا bârekte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd.",
                     transliteration = "Allâhümme salli alâ Muhammedin... Kemâ salleyte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd. Allâhümme bârik alâ Muhammedin... Kemâ bârekte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd.",
                     translation = "Allah'ım! Hz. Muhammed'e ve onun aline salat et... Şüphesek Sen, övülmeye layık und sherefi yüce olansın."
                 ),
@@ -534,6 +611,74 @@ fun getMemorizationData(lang: AppLanguage) = when (lang) {
                     arabic = "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
                     transliteration = "Esselâmu aleyküm ve rahmetullâh",
                     translation = "Allah'ın selamı ve rahmeti üzerinize olsun."
+                )
+            )
+        ),
+        MemorizationCategory(
+            id = "structure",
+            categoryName = "Namazın Kılınışı (Yapısı)",
+            items = listOf(
+                MemorizationItem(
+                    title = "2 Rekatlık Namaz (Örn. Sabah)",
+                    note = "Tam Uygulama",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        Hazırlık: Kalben niyet edin ve Kıbleye (Kabe) yönelin.
+                        
+                        1. Rekat:
+                        1. İftitah Tekbiri: Allahu Ekber diyerek başlayın.
+                        2. Kıyam: Fatiha + zammı sure (örn. Kevser) okuyun.
+                        3. Rüku: 3x Sübhane Rabbiye'l-Azim.
+                        4. Doğrulmak: Semi' Allahu... sonra Rabbenâ leke'l-hamd.
+                        5. Secde: 3x Sübhane Rabbiye'l-Alâ.
+                        6. Oturuş: Rabbighfir li.
+                        7. İkinci Secde.
+                        
+                        2. Rekat:
+                        8. İkinci rekat için ayağa kalkın.
+                        9. Kıyam: Fatiha + zammı sure okuyun.
+                        10. Tüm hareketleri (Rüku - Secde) tekrarlayın.
+                        
+                        Bitiş:
+                        11. Son Oturuş: Tahiyyat & Salli-Barik dualarını okuyun.
+                        12. Selam: Önce sağa sonra sola selam verin.
+                    """.trimIndent()
+                ),
+                MemorizationItem(
+                    title = "3 Rekatlık Namaz (Örn. Akşam)",
+                    note = "Yapısal Akış",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        1. ve 2. Rekat: 2 rekatlık namaz gibi kılınır.
+                        2. Rekattan sonra: Ara oturuş - Sadece Tahiyyat okunur (Salli-Barik okunmaz).
+                        
+                        3. Rekat:
+                        1. Ayağa kalkın.
+                        2. Sadece Fatiha okuyun (Zammı sure eklenmez).
+                        3. Tüm hareketleri (Rüku - Secde) yapın.
+                        
+                        Bitiş:
+                        1. Son Oturuş: Tam Tahiyyat & Salli-Barik.
+                        2. Selam: Namazı bitirin.
+                    """.trimIndent()
+                ),
+                MemorizationItem(
+                    title = "4 Rekatlık Namaz (Öğle, İkindi, Yatsı)",
+                    note = "Yapısal Akış",
+                    arabic = "", transliteration = "",
+                    translation = """
+                        1. ve 2. Rekat: Normal şekilde (Fatiha + Sure).
+                        2. Rekattan sonra: Ara oturuş - Sadece Tahiyyat okunur.
+                        
+                        3. ve 4. Rekat:
+                        1. Ayağa kalkın.
+                        2. Sadece Fatiha okuyun (Zammı sure eklenmez).
+                        3. Tüm hareketleri (Rüku - Secde) yapın.
+                        
+                        Bitiş:
+                        1. Son Oturuş: Tam Tahiyyat & Salli-Barik.
+                        2. Selam: Namazı bitirin.
+                    """.trimIndent()
                 )
             )
         )
