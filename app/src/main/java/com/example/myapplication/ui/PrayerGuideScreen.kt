@@ -78,14 +78,14 @@ object CommonSteps {
     fun niyyah(prayerName: String, rakat: Int, lang: AppLanguage) = when (lang) {
         AppLanguage.GERMAN -> PrayerStep(
             title = "Niyyah (Absicht)",
-            posture = "Qiyam (Stehen)",
+            posture = "Qiyam",
             description = "Fassen Sie die Absicht für das $prayerName Gebet ($rakat Rakat) fest in Ihrem Herzen.",
             images = listOf(R.drawable.niyyah),
             durationMillis = 6000L
         )
         AppLanguage.TURKISH -> PrayerStep(
             title = "Niyet",
-            posture = "Kıyam (Ayakta durmak)",
+            posture = "Kıyam",
             description = "$prayerName namazı için ($rakat rekat) niyet edin.",
             images = listOf(R.drawable.niyyah),
             durationMillis = 6000L
@@ -95,8 +95,8 @@ object CommonSteps {
     fun takbir(lang: AppLanguage) = when (lang) {
         AppLanguage.GERMAN -> PrayerStep(
             title = "Takbirat al-Ihram",
-            posture = "Hände heben",
-            description = "Heben Sie die Hände und sagen Sie einmalig:",
+            posture = "Takbiratu-l-ihram",
+            description = "Eröffnendes Takbir: Aufrecht stehen in Richtung Mekka, beide Hände in Höhe des Halses oder der Ohren hebend, Handflächen nach vorn geöffnet. Sagen Sie einmalig:",
             arabicText = "اللَّهُ أَكْبَرُ",
             transliteration = "Allahu Akbar",
             translation = "Allah ist am größten",
@@ -105,7 +105,7 @@ object CommonSteps {
         )
         AppLanguage.TURKISH -> PrayerStep(
             title = "İftitah Tekbiri",
-            posture = "Elleri kaldırmak",
+            posture = "İftitah Tekbiri",
             description = "Ellerinizi kaldırın ve bir kez söyleyin:",
             arabicText = "اللَّهُ أَكْبَرُ",
             transliteration = "Allahu Ekber",
@@ -119,9 +119,9 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Qiyam",
-                posture = "Stehen",
-                description = "Rezitieren Sie die al-Fatiha" + if (withExtraSura) " und eine weitere Sure." else ".",
-                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَنِ الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ. صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+                posture = "Qiyam",
+                description = "Aufrechtes Stehen: Hände zwischen Brust und Nabel verschränkt, rechte Hand auf linken Unterarm legen. Rezitieren Sie die al-Fatiha" + if (withExtraSura) " und eine weitere Sure." else ".",
+                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْhَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّhْمَنِ الرَّhِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ. صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْhِمْ غَيْرِ الْمَغْضُوبِ عَلَيْhِمْ وَلَا الضَّالِّينَ",
                 transliteration = "Bismillahir-rahmanir-rahim. Al-hamdu lillahi rabbil-'alamin. Ar-rahmanir-rahim. Maliki yawmid-din. Iyyaka na'budu wa iyyaka nasta'in. Ihdinas-siratal-mustaqim. Siratal-ladhina an'amta 'alayhim, ghayril-maghdubi 'alayhim walad-dallin.",
                 translation = "Im Namen Allahs, des Gnädigen, des Barmherzigen. Alles Lob gebührt Allah, dem Herrn der Welten. Dem Gnädigen, dem Barmherzigen. Herrscher am Tage des Gerichts. Dir allein dienen wir, und zu Dir allein flehen wir um Hilfe. Führe uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht den Weg derer, die Deinen Zorn erregt haben, und nicht den Weg der Irrenden.",
                 images = listOf(R.drawable.qiyam),
@@ -129,9 +129,9 @@ object CommonSteps {
             )
             AppLanguage.TURKISH -> PrayerStep(
                 title = "$number. Rekat: Kıyam",
-                posture = "Ayakta durmak",
+                posture = "Kıyam",
                 description = "Fatiha suresini" + if (withExtraSura) " ve ek bir sure okuyun." else " okuyun.",
-                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَن. الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّİREKAL MÜSTAKİM. SIRÂTALLEZÎNE EN'AMTE ALEYHİM GAYRİLMAĞDÛBİ ALEYHİM VELEDDÂLLÎN.",
+                arabicText = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ. الْhَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّhْمَن. الرَّhِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّIREKAL MÜSTAKİM. SIRÂTALLEZÎNE EN'AMTE ALEYHİM GAYRİLMAĞDÛBİ ALEYHİM VELEDDÂLLÎN.",
                 transliteration = "Bismillâhirrahmânirrahîm. Elhamdü lillâhi rabbil'alemin. Errahmânirrahîm. Mâliki yevmiddîn. İyyâke na'büdü ve iyyâke neste'în. İhdinessırâtel müstakîm. Sırâtallezîne en'amte aleyhim gayrilmağdûbi aleyhim veleddâllîn.",
                 translation = "Rahman ve Rahim olan Allah'ın adıyla. Hamd, Alemlerin Rabbi Allah'a mahsustur. O, Rahman ve Rahimdir. Hesap ve ceza gününün malikidir. Yalnız Sana ibadet eder ve yalnız Senden yardım dileriz. Bizi doğru yola ilet; kendilerine nimet verdiklerinin yoluna, gazaba uğrayanlarınkine ve sapkınlarınkine değil.",
                 images = listOf(R.drawable.qiyam),
@@ -141,9 +141,9 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Ruku",
-                posture = "Verbeugung",
-                description = "Beugen Sie sich vor und sagen Sie dreimal:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+                posture = "Ruku‘",
+                description = "Verbeugen: Oberkörper nach vorn beugen, Hände auf den Kniescheiben ablegen. Sagen Sie dreimal:",
+                arabicText = "سُبْhَانَ رَبِّيَ الْعَظِيمِ",
                 transliteration = "Subhana Rabbiyal-Adhim",
                 translation = "Gepriesen sei mein Herr, der Gewaltige",
                 images = listOf(R.drawable.ruku),
@@ -152,9 +152,9 @@ object CommonSteps {
             )
             AppLanguage.TURKISH -> PrayerStep(
                 title = "$number. Rekat: Rüku",
-                posture = "Eğilmek",
+                posture = "Rüku",
                 description = "Eğilin ve üç kez söyleyin:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+                arabicText = "سُبْhَانَ رَبِّيَ الْعَظِيمِ",
                 transliteration = "Sübhâne Rabbiye’l-Azîm",
                 translation = "Azamet sahibi olan Rabbim her türlü noksanlıktan münezzehtir",
                 images = listOf(R.drawable.ruku),
@@ -165,9 +165,9 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Aufrichten",
-                posture = "Stehen",
-                description = "Richten Sie sich auf und sagen Sie:",
-                arabicText = "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ. رَبَّنَا وَلَكَ الْحَمْدُ",
+                posture = "Qama",
+                description = "Aufrechtes Stehen: Nach der Verbeugung wieder gerade stehen, Hände an den Seiten. Sagen Sie:",
+                arabicText = "سَمِعَ اللَّهُ لِمَنْ hَمِدَهُ. رَبَّنَا وَلَكَ الْhَمْدُ",
                 transliteration = "Sami'Allahu liman hamidah. Rabbana wa lakal-hamd",
                 translation = "Allah hört den, der Ihn preist. Unser Herr, Dir gebührt alles Lob",
                 images = listOf(R.drawable.itidal),
@@ -175,9 +175,9 @@ object CommonSteps {
             )
             AppLanguage.TURKISH -> PrayerStep(
                 title = "$number. Rekat: Doğrulmak",
-                posture = "Ayakta durmak",
+                posture = "Kıyam",
                 description = "Doğrulun ve söyleyin:",
-                arabicText = "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ. رَبَّنَا وَلَكَ الْحَمْدُ",
+                arabicText = "سَمِعَ اللَّهُ لِمَنْ hَمِدَهُ. رَبَّنَا وَلَكَ الْhَمْدُ",
                 transliteration = "Semi’allâhu limen hamideh. Rabbenâ leke’l-hamd",
                 translation = "Allah hamd edeni işitti. Rabbimiz, hamd sana mahsustur",
                 images = listOf(R.drawable.itidal),
@@ -187,9 +187,9 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Sujud 1",
-                posture = "Niederwerfung",
-                description = "Werfen Sie sich nieder und sagen Sie dreimal:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+                posture = "Sadschda",
+                description = "Niederwerfung: Stirn, Nase, Handflächen, Knie und Zehenspitzen berühren den Boden. Sagen Sie dreimal:",
+                arabicText = "سُبْhَانَ رَبِّيَ الْأَعْلَى",
                 transliteration = "Subhana Rabbiyal-A'la",
                 translation = "Gepriesen sei mein Herr, der Allerhöchste",
                 images = listOf(R.drawable.sujud),
@@ -200,7 +200,7 @@ object CommonSteps {
                 title = "$number. Rekat: Secde 1",
                 posture = "Secde",
                 description = "Secdeye gidin ve üç kez söyleyin:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+                arabicText = "سُبْhَانَ رَبِّيَ الْأَعْلَى",
                 transliteration = "Sübhâne Rabbiye’l-A’lâ",
                 translation = "Yüce olan Rabbim her türlü noksan sıfatlardan münezzehtir",
                 images = listOf(R.drawable.sujud),
@@ -211,8 +211,8 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Sitzen",
-                posture = "Sitzen",
-                description = "Setzen Sie sich kurz aufrecht hin und sagen Sie:",
+                posture = "Dschalsa",
+                description = "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Sagen Sie:",
                 arabicText = "رَبِّ اغْفِرْ لِي",
                 transliteration = "Rabbighfir li",
                 translation = "Mein Herr, vergib mir",
@@ -233,9 +233,9 @@ object CommonSteps {
         when (lang) {
             AppLanguage.GERMAN -> PrayerStep(
                 title = "Rakat $number: Sujud 2",
-                posture = "Niederwerfung",
-                description = "Wiederholen Sie die Niederwerfung dreimal:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+                posture = "Sadschda",
+                description = "Niederwerfung: Stirn, Nase, Handflächen, Knie und Zehenspitzen berühren den Boden. Sagen Sie dreimal:",
+                arabicText = "سُبْhَانَ رَبِّيَ الْأَعْلَى",
                 transliteration = "Subhana Rabbiyal-A'la",
                 translation = "Gepriesen sei mein Herr, der Allerhöchste",
                 images = listOf(R.drawable.sujud),
@@ -246,7 +246,7 @@ object CommonSteps {
                 title = "$number. Rekat: Secde 2",
                 posture = "Secde",
                 description = "Secdeyi tekrarlayın ve üç kez söyleyin:",
-                arabicText = "سُبْحَانَ رَبِّيَ الْأَعْلَى",
+                arabicText = "سُبْhَانَ رَبِّيَ الْأَعْلَى",
                 transliteration = "Sübhâne Rabbiye’l-A’lâ",
                 translation = "Yüce olan Rabbim her türlü noksan sıfatlardan münezzehtir",
                 images = listOf(R.drawable.sujud),
@@ -259,9 +259,9 @@ object CommonSteps {
     fun middleTashahhud(lang: AppLanguage) = when (lang) {
         AppLanguage.GERMAN -> PrayerStep(
             title = "Mittlerer Tashahhud",
-            posture = "Sitzen",
-            description = "Rezitieren Sie den ersten Teil des Tashahhud.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+            posture = "Dschalsa",
+            description = "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Rezitieren Sie den ersten Teil des Tashahhud.",
+            arabicText = "التَّhِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْhَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْhَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْhَدُ أَنَّ مُhَمَّدًا عَبْدُهُ وَرَسُولُهُ",
             transliteration = "At-tahiyyatu lillahi was-salawatu wat-tayyibatu, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuhu, as-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah wa ashhadu anna Muhammadan 'abduhu wa rasuluh.",
             translation = "Alle Ehrerweisungen, Gebete und die guten Dinge gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Sein Segen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass es keinen Gott gibt außer Allah, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist.",
             images = listOf(R.drawable.jalsa),
@@ -271,9 +271,9 @@ object CommonSteps {
             title = "Tahiyyat (Ara Oturuş)",
             posture = "Oturuş",
             description = "Tahiyyat duasının ilk bölümünü okuyun.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+            arabicText = "التَّhِيَّاتُ lillâhi vessalevâtü vettayyıbât. Esselâmü aleyke eyyühen-nebiyyü ve rahmetüllâhi ve berekâtüh. Esselâmü aleynâ ve alâ ibâdillâhis-salihîn. Eşhedü en lâ ilâhe illallâh ve eşhedü enne Muhammeden abdühû ve rasûlüh.",
             transliteration = "Ettehıyyâtü lillâhi vessalevâtü vettayyıbât. Esselâmü aleyke eyyühen-nebiyyü ve rahmetüllâhi ve berekâtüh. Esselâmü aleynâ ve alâ ibâdillâhis-salihîn. Eşhedü en lâ ilâhe illallâh ve eşhedü enne Muhammeden abdühû ve rasûlüh.",
-            translation = "Bütün dualar, senalar, bedeni ve mali ibadetler Allah'a mahsustur. Ey Peygamber! Selam, Allah'ın rahmet ve bereketleri senin üzerine olsun. Selam bizim üzerimize ve Allah'ın bütün salih kulları üzerine olsun. Şahitlik ederim ki Allah'tan başka ilah yoktur. Yine şahitlik ederim ki Muhammed O'nun kulu und elçisidir.",
+            translation = "Bütün dualar, senalar, bedeni ve mali ibadetler Allah'a mahsustur. Ey Peygamber! Selam, Allah'ın rahmet ve bereketleri senin üzerine olsun. Selam bizim üzerimize ve Allah'ın bütün salih kulları üzerine olsun. Şahitlik ederim ki Allah'tan başka ilah yoktur. Yine shahitlik ederim ki Muhammed O'nun kulu und elçisidir.",
             images = listOf(R.drawable.jalsa),
             durationMillis = 15000L
         )
@@ -282,9 +282,9 @@ object CommonSteps {
     fun finalTashahhud(lang: AppLanguage) = when (lang) {
         AppLanguage.GERMAN -> PrayerStep(
             title = "Abschluss-Tashahhud",
-            posture = "Sitzen",
-            description = "Rezitieren Sie den vollständigen Tashahhud und Gebete für den Propheten.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَاد. اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِIDٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ",
+            posture = "Dschalsa",
+            description = "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Rezitieren Sie den vollständigen Tashahhud und Gebete für den Propheten.",
+            arabicText = "التَّhِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَاد. اللَّهِ الصَّALIHِينَ أَشْhَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْhَدُ أَنَّ مُhَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّhُمَّ صَلِّ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hَمِيدٌ مَجِIDٌ. اللَّhُمَّ بَارِكْ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا  بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hَمِيدٌ مَجِيدٌ",
             transliteration = "At-tahiyyatu lillahi was-salawatu wat-tayyibatu, as-salamu 'alayka ayyuhan-nabiyyu wa rahmatullahi wa barakatuhu, as-salamu 'alayna wa 'ala 'ibadillahis-salihin. Ashhadu an la ilaha illallah wa ashhadu anna Muhammadan 'abduhu wa rasuluh. Allahumma salli 'ala Muhammadin wa 'ala ali Muhammad, kama sallayta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid. Allahumma barik 'ala Muhammadin wa 'ala ali Muhammad, kama barakta 'ala Ibrahima wa 'ala ali Ibrahim, innaka Hamidun Majid.",
             translation = "Alle Ehrerweisungen gebühren Allah. Friede sei mit dir, o Prophet... Ich bezeuge, dass es keinen Gott gibt außer Allah und Muhammad Sein Gesandter ist. O Allah, segne Muhammad und die Familie von Muhammad, wie Du Abraham und die Familie von Abraham gesegnet hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche. O Allah, gib Muhammad und der Familie von Muhammad Deinen Segen, wie Du Abraham und die Familie von Abraham Deinen Segen gegeben hast. Wahrlich, Du bist der Preiswürdige, der Ruhmreiche.",
             images = listOf(R.drawable.jalsa),
@@ -294,19 +294,19 @@ object CommonSteps {
             title = "Son Oturuş (Tahiyyat, Salli-Barik)",
             posture = "Oturuş",
             description = "Tahiyyat ve Salli-Barik dualarını okuyun.",
-            arabicText = "التَّحِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْهَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَجِيدٌ. اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hamîdün mecîd",
+            arabicText = "التَّhِيَّاتُ لِلَّهِ وَالصَّلَواتُ وَالطَّيِّباتُ السَّلامُ عَلَيْكَ أَيُّهَا النَّBِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ السَّلامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّALIHِينَ أَشْhَدُ أَنْ لا إِلَهَ إِلَّا اللَّهُ وَأَشْhَدُ أَنَّ مُhَمَّدًا عَبْدُهُ وَرَسُولُهُ. اللَّhُمَّ صَلِّ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ إِنَّكَ hَمِيدٌ مَجِيدٌ. اللَّhُمَّ بَارِكْ عَلَى مُhَمَّدٍ وَعَلَى آلِ مُhَمَّدٍ كَمَا bârekte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd.",
             transliteration = "Ettehıyyâtü... Allâhümme salli alâ Muhammedin ve alâ âli Muhammed. Kemâ salleyte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd. Allâhümme bârik alâ Muhammedin ve alâ âli Muhammed. Kemâ bârekte alâ İbrâhîme ve alâ âli İbrâhîm. İnneke hamîdün mecîd.",
-            translation = "Tahiyyat... Allah'ım! Hz. Muhammed'e ve onun aline salat et, tıpkı Hz. İbrahim'e ve aline salat ettiğin gibi. Şüphesek Sen, övülmeye layık und şerefi yüce olansın. Allah'ım! Hz. Muhammed'e ve onun aline bereket ver, tıpkı Hz. İbrahim'e ve aline bereket verdiğin gibi. Şüphesiz Sen, övülmeye layık und şerefi yüce olansın.",
+            translation = "Tahiyyat... Allah'ım! Hz. Muhammed'e ve onun aline salat et, tıpkı Hz. İbrahim'e ve aline salat ettiğin gibi. Şüphesek Sen, övülmeye layık und sherefi yüce olansın. Allah'ım! Hz. Muhammed'e ve onun aline bereket ver, tıpkı Hz. İbrahim'e ve aline bereket verdiğin gibi. Shüphesiz Sen, övülmeye layık und sherefi yüce olansın.",
             images = listOf(R.drawable.jalsa),
             durationMillis = 25000L
         )
     }
 
-    fun taslim(lang: AppLanguage) = when (lang) {
+    fun finalTaslim(lang: AppLanguage) = when (lang) {
         AppLanguage.GERMAN -> PrayerStep(
             title = "Taslim (Abschluss)",
-            posture = "Kopf drehen",
-            description = "Grüßen Sie nach rechts und nach links.",
+            posture = "Salam",
+            description = "Friedensgruß: Wie Dschalsa, dabei Kopf erst nach rechts, dann nach links wenden.",
             arabicText = "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
             transliteration = "Assalamu alaykum wa rahmatullah",
             translation = "Friede sei mit euch und die Barmherzigkeit Allahs",
@@ -316,7 +316,7 @@ object CommonSteps {
         )
         AppLanguage.TURKISH -> PrayerStep(
             title = "Selam",
-            posture = "Başını çevirmek",
+            posture = "Selam",
             description = "Sağa ve sola selam verin.",
             arabicText = "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
             transliteration = "Esselâmu aleyküm ve rahmetullâh",
@@ -335,7 +335,7 @@ fun getAllPrayers(lang: AppLanguage) = listOf(
         rakat = 2,
         steps = listOf(CommonSteps.niyyah(if (lang == AppLanguage.GERMAN) "Fajr" else "Sabah", 2, lang), CommonSteps.takbir(lang)) +
                 CommonSteps.rakatSteps(1, lang) + CommonSteps.rakatSteps(2, lang) +
-                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.taslim(lang))
+                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.finalTaslim(lang))
     ),
     PrayerConfig(
         id = "dhuhr", name = if (lang == AppLanguage.GERMAN) "Dhuhr" else "Öğle",
@@ -344,7 +344,7 @@ fun getAllPrayers(lang: AppLanguage) = listOf(
         steps = listOf(CommonSteps.niyyah(if (lang == AppLanguage.GERMAN) "Dhuhr" else "Öğle", 4, lang), CommonSteps.takbir(lang)) +
                 CommonSteps.rakatSteps(1, lang) + CommonSteps.rakatSteps(2, lang) + listOf(CommonSteps.middleTashahhud(lang)) +
                 CommonSteps.rakatSteps(3, lang, false) + CommonSteps.rakatSteps(4, lang, false) +
-                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.taslim(lang))
+                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.finalTaslim(lang))
     ),
     PrayerConfig(
         id = "asr", name = if (lang == AppLanguage.GERMAN) "Asr" else "İkindi",
@@ -353,7 +353,7 @@ fun getAllPrayers(lang: AppLanguage) = listOf(
         steps = listOf(CommonSteps.niyyah(if (lang == AppLanguage.GERMAN) "Asr" else "İkindi", 4, lang), CommonSteps.takbir(lang)) +
                 CommonSteps.rakatSteps(1, lang) + CommonSteps.rakatSteps(2, lang) + listOf(CommonSteps.middleTashahhud(lang)) +
                 CommonSteps.rakatSteps(3, lang, false) + CommonSteps.rakatSteps(4, lang, false) +
-                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.taslim(lang))
+                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.finalTaslim(lang))
     ),
     PrayerConfig(
         id = "maghrib", name = if (lang == AppLanguage.GERMAN) "Maghrib" else "Akşam",
@@ -362,7 +362,7 @@ fun getAllPrayers(lang: AppLanguage) = listOf(
         steps = listOf(CommonSteps.niyyah(if (lang == AppLanguage.GERMAN) "Maghrib" else "Akşam", 3, lang), CommonSteps.takbir(lang)) +
                 CommonSteps.rakatSteps(1, lang) + CommonSteps.rakatSteps(2, lang) + listOf(CommonSteps.middleTashahhud(lang)) +
                 CommonSteps.rakatSteps(3, lang, false) +
-                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.taslim(lang))
+                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.finalTaslim(lang))
     ),
     PrayerConfig(
         id = "isha", name = if (lang == AppLanguage.GERMAN) "Isha" else "Yatsı",
@@ -371,7 +371,7 @@ fun getAllPrayers(lang: AppLanguage) = listOf(
         steps = listOf(CommonSteps.niyyah(if (lang == AppLanguage.GERMAN) "Isha" else "Yatsı", 4, lang), CommonSteps.takbir(lang)) +
                 CommonSteps.rakatSteps(1, lang) + CommonSteps.rakatSteps(2, lang) + listOf(CommonSteps.middleTashahhud(lang)) +
                 CommonSteps.rakatSteps(3, lang, false) + CommonSteps.rakatSteps(4, lang, false) +
-                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.taslim(lang))
+                listOf(CommonSteps.finalTashahhud(lang), CommonSteps.finalTaslim(lang))
     )
 )
 
@@ -479,6 +479,8 @@ fun PrayerLearnScreen(
                         )
                 ) {
                     GuidedPrayerSession(
+                        prayerName = targetState.name,
+                        rakatCount = targetState.rakat,
                         steps = targetState.steps,
                         onSpeakSuspend = ::speakSuspend,
                         onExit = { selectedPrayer = null }
@@ -556,27 +558,27 @@ fun PrayerReferenceScreen(
                         CommonSteps.takbir(lang).copy(title = if (lang == AppLanguage.GERMAN) "Beginn (Takbir)" else "Başlangıç (Tekbir)"),
                         PrayerStep(
                             title = if (lang == AppLanguage.GERMAN) "Die ersten zwei Rakat" else "İlk İki Rekat",
-                            posture = if (lang == AppLanguage.GERMAN) "Qiyam (Stehen)" else "Kıyam (Ayakta durmak)",
-                            description = if (lang == AppLanguage.GERMAN) "Hier rezitieren Sie die al-Fatiha und eine weitere Sure Ihrer Wahl." else "Burada Fatiha suresini ve seçtiğiniz bir sureyi okuyun.",
+                            posture = if (lang == AppLanguage.GERMAN) "Qiyam" else "Kıyam",
+                            description = if (lang == AppLanguage.GERMAN) "Aufrechtes Stehen: Hände zwischen Brust und Nabel verschränkt, rechte Hand auf linken Unterarm legen. Hier rezitieren Sie die al-Fatiha und eine weitere Sure Ihrer Wahl." else "Burada Fatiha suresini ve seçtiğiniz bir sureyi okuyun.",
                             arabicText = qiyamStep.arabicText,
                             transliteration = qiyamStep.transliteration,
                             translation = qiyamStep.translation
                         ),
-                        CommonSteps.rakatSteps(1, lang)[1].copy(title = if (lang == AppLanguage.GERMAN) "Die Verbeugung" else "Rüku", posture = "Ruku", description = if (lang == AppLanguage.GERMAN) "Beugen Sie sich vor und sagen Sie dreimal die Lobpreisung." else "Eğilin ve üç kez tesbihatı söyleyin."),
-                        CommonSteps.rakatSteps(1, lang)[2].copy(title = if (lang == AppLanguage.GERMAN) "Das Aufrichten" else "Doğrulmak", posture = "I'dtidal"),
-                        CommonSteps.rakatSteps(1, lang)[3].copy(title = if (lang == AppLanguage.GERMAN) "Die Niederwerfung" else "Secde", posture = "Sujud", description = if (lang == AppLanguage.GERMAN) "Sagen Sie dreimal die Lobpreisung. Dies geschieht zweimal pro Rakat." else "Üç kez tesbihatı söyleyin. Bu her rekatta iki kez yapılır."),
-                        CommonSteps.rakatSteps(1, lang)[4].copy(title = if (lang == AppLanguage.GERMAN) "Das Sitzen" else "Oturuş", posture = "Jalsa", description = if (lang == AppLanguage.GERMAN) "Das kurze Sitzen zwischen den beiden Niederwerfungen." else "İki secde arasındaki kısa oturuş."),
-                        if (rCount > 2) CommonSteps.middleTashahhud(lang).copy(title = if (lang == AppLanguage.GERMAN) "Mittlerer Tashahhud" else "Ara Oturuş (Tahiyyat)", description = if (lang == AppLanguage.GERMAN) "Wird nach der 2. Rakat rezitiert (bei 3 oder 4 Rakat Gebeten)." else "2. rekattan sonra okunur (3 veya 4 rekatlı namazlarda).") else null,
+                        CommonSteps.rakatSteps(1, lang)[1].copy(title = if (lang == AppLanguage.GERMAN) "Die Verbeugung" else "Rüku", posture = if (lang == AppLanguage.GERMAN) "Ruku‘" else "Rüku", description = if (lang == AppLanguage.GERMAN) "Verbeugen: Oberkörper nach vorn beugen, Hände auf den Kniescheiben ablegen. Sagen Sie dreimal die Lobpreisung." else "Eğilin ve üç kez tesbihatı söyleyin."),
+                        CommonSteps.rakatSteps(1, lang)[2].copy(title = if (lang == AppLanguage.GERMAN) "Das Aufrichten" else "Doğrulmak", posture = if (lang == AppLanguage.GERMAN) "Qama" else "Kıyam"),
+                        CommonSteps.rakatSteps(1, lang)[3].copy(title = if (lang == AppLanguage.GERMAN) "Die Niederwerfung" else "Secde", posture = if (lang == AppLanguage.GERMAN) "Sadschda" else "Secde", description = if (lang == AppLanguage.GERMAN) "Niederwerfung: Stirn, Nase, Handflächen, Knie und Zehenspitzen berühren den Boden. Sagen Sie dreimal die Lobpreisung. Dies geschieht zweimal pro Rakat." else "Üç kez tesbihatı söyleyin. Bu her rekatta iki kez yapılır."),
+                        CommonSteps.rakatSteps(1, lang)[4].copy(title = if (lang == AppLanguage.GERMAN) "Das Sitzen" else "Oturuş", posture = if (lang == AppLanguage.GERMAN) "Dschalsa" else "Celse", description = if (lang == AppLanguage.GERMAN) "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Das kurze Sitzen zwischen den beiden Niederwerfungen." else "İki secde arasındaki kısa oturuş."),
+                        if (rCount > 2) CommonSteps.middleTashahhud(lang).copy(title = if (lang == AppLanguage.GERMAN) "Mittlerer Tashahhud" else "Ara Oturuş (Tahiyyat)", description = if (lang == AppLanguage.GERMAN) "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Wird nach der 2. Rakat rezitiert (bei 3 oder 4 Rakat Gebeten)." else "2. rekattan sonra okunur (3 veya 4 rekatlı namazlarda).") else null,
                         if (rCount > 2) PrayerStep(
                             title = if (lang == AppLanguage.GERMAN) "Die hinteren Rakat (3. & 4.)" else "Sonraki Rekatlar (3. ve 4.)",
-                            posture = if (lang == AppLanguage.GERMAN) "Qiyam (Stehen)" else "Kıyam (Ayakta durmak)",
-                            description = if (lang == AppLanguage.GERMAN) "In der 3. und 4. Rakat wird nur die al-Fatiha leise rezitiert." else "3. ve 4. rekatta sadece Fatiha suresi sessizce okunur.",
+                            posture = if (lang == AppLanguage.GERMAN) "Qiyam" else "Kıyam",
+                            description = if (lang == AppLanguage.GERMAN) "Aufrechtes Stehen: Hände zwischen Brust und Nabel verschränkt, rechte Hand auf linken Unterarm legen. In der 3. und 4. Rakat wird nur die al-Fatiha leise rezitiert." else "3. ve 4. rekatta sadece Fatiha suresi sessizce okunur.",
                             arabicText = qiyamStep.arabicText,
                             transliteration = qiyamStep.transliteration,
                             translation = qiyamStep.translation
                         ) else null,
-                        CommonSteps.finalTashahhud(lang).copy(title = if (lang == AppLanguage.GERMAN) "Abschluss-Tashahhud" else "Son Oturuş (Tahiyyat)", description = if (lang == AppLanguage.GERMAN) "Der vollständige Tashahhud am Ende des Gebets." else "Namazın sonundaki tam Tahiyyat."),
-                        CommonSteps.taslim(lang).copy(title = if (lang == AppLanguage.GERMAN) "Der Friedensgruß (Taslim)" else "Selam")
+                        CommonSteps.finalTashahhud(lang).copy(title = if (lang == AppLanguage.GERMAN) "Abschluss-Tashahhud" else "Son Oturuş (Tahiyyat)", description = if (lang == AppLanguage.GERMAN) "Aufsitzen: Auf Knien und Füßen sitzen, Hände auf den Knien. Der vollständige Tashahhud am Ende des Gebets." else "Namazın sonundaki tam Tahiyyat."),
+                        CommonSteps.finalTaslim(lang).copy(title = if (lang == AppLanguage.GERMAN) "Der Friedensgruß (Taslim)" else "Selam")
                     ).filterNotNull()
                 }
 
@@ -624,7 +626,7 @@ fun PrayerStepsListScreen(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f))
         ) {
             Text(
-                if (lang == AppLanguage.GERMAN) "Diese Liste zeigt die verschiedenen Bestandteile des Gebets ohne Wiederholungen der Rakat-Blöcke." else "Bu liste, rekat tekrarları olmaksızın namazın farklı bölümlerini göstermektedir.",
+                if (lang == AppLanguage.GERMAN) "Diese Liste zeigt die verschiedenen Bestandteile des Gebets ohne Wiederholungen der Rakat-Blöcke." else "Bu liste, rekat tekrarları olmaksızın namazın different bölümlerini göstermektedir.",
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.padding(12.dp)
             )
@@ -795,6 +797,8 @@ fun PrayerSelectionScreen(
 
 @Composable
 fun GuidedPrayerSession(
+    prayerName: String,
+    rakatCount: Int,
     steps: List<PrayerStep>,
     onSpeakSuspend: suspend (String, Locale) -> Unit,
     onExit: () -> Unit
@@ -828,17 +832,24 @@ fun GuidedPrayerSession(
 
     Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         if (currentStepIndex == -1) {
-            CountdownUI(countdownValue)
+            CountdownUI(prayerName, rakatCount, countdownValue)
         } else if (currentStepIndex < steps.size) {
-            ActiveStepUI(steps[currentStepIndex], currentStepIndex, steps.size, onExit)
+            ActiveStepUI(prayerName, rakatCount, steps[currentStepIndex], currentStepIndex, steps.size, onExit)
         }
     }
 }
 
 @Composable
-fun CountdownUI(value: Int) {
+fun CountdownUI(prayerName: String, rakatCount: Int, value: Int) {
     val lang = LocalAppLanguage.current
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        Text(
+            text = "$prayerName ($rakatCount Rakat)",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(Modifier.height(32.dp))
         Text(if (lang == AppLanguage.GERMAN) "Bereit machen..." else "Hazırlanın...", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
         Spacer(Modifier.height(16.dp))
         Text(if (lang == AppLanguage.GERMAN) "Lege dein Handy vor dich hin." else "Telefonunuzu önünüze koyun.", textAlign = TextAlign.Center, modifier = Modifier.padding(horizontal = 32.dp))
@@ -850,9 +861,17 @@ fun CountdownUI(value: Int) {
 }
 
 @Composable
-fun ActiveStepUI(step: PrayerStep, index: Int, total: Int, onExit: () -> Unit) {
+fun ActiveStepUI(prayerName: String, rakatCount: Int, step: PrayerStep, index: Int, total: Int, onExit: () -> Unit) {
     val lang = LocalAppLanguage.current
     Column(modifier = Modifier.fillMaxSize().statusBarsPadding().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        // Show Prayer Name and Rakat
+        Text(
+            text = "$prayerName ($rakatCount Rakat)",
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(Modifier.height(8.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Text(if (lang == AppLanguage.GERMAN) "Schritt ${index + 1} von $total" else "${index + 1}. Adım / $total", style = MaterialTheme.typography.labelLarge)
             IconButton(onClick = onExit) { Icon(Icons.Default.Close, contentDescription = if (lang == AppLanguage.GERMAN) "Beenden" else "Bitir") }

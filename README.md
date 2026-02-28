@@ -11,16 +11,9 @@ A modern, immersive Android app for learning and performing Islamic prayers. **V
 - **Multilingual**: Native support for German and Turkish.
 - **Immersive UI**: Edge-to-edge design with a floating pill navigation bar.
 
-## 🛠 Tech Stack
-Kotlin, Jetpack Compose (Material 3), Shared Transitions, TTS API.
-
 ## 📱 Screenshot
 <p align="center">
   <img src="app/src/main/res/drawable/screenshot.png" width="300">
 </p>
-
-## 🚀 Quick Start
-1. Open in **Android Studio**.
-2. Sync and Run.
 
 > **Note**: You can find the latest **debug APK** in the "Actions" tab of this repository under the latest successful build artifacts.
