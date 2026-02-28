@@ -19,6 +19,7 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Translate
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -33,6 +34,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.AppLanguage
 import com.example.myapplication.ui.LocalAppLanguage
+import com.example.myapplication.ui.MemorizationScreen
 import com.example.myapplication.ui.PrayerLearnScreen
 import com.example.myapplication.ui.PrayerReferenceScreen
 import com.example.myapplication.ui.PrerequisitesScreen
@@ -181,6 +183,11 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                             isTtsReady = isTtsReady,
                             modifier = Modifier.fillMaxSize()
                         )
+                        AppDestinations.AUSWENDIG_LERNEN -> MemorizationScreen(
+                            tts = tts,
+                            isTtsReady = isTtsReady,
+                            modifier = Modifier.fillMaxSize()
+                        )
                         AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
                     }
                 }
@@ -255,6 +262,7 @@ enum class AppDestinations(
     val icon: ImageVector,
 ) {
     MITBETEN("Mitbeten", "Eşlik Et", Icons.Default.PlayArrow),
-    SCHRITT_FUER_SCHRITT("Schritt für Schritt", "Adım Adım", Icons.AutoMirrored.Filled.List),
+    SCHRITT_FUER_SCHRITT("Referenz", "Referans", Icons.AutoMirrored.Filled.List),
+    AUSWENDIG_LERNEN("Lernen", "Ezberle", Icons.Default.MenuBook),
     VORAUSSETZUNGEN("Voraussetzungen", "Ön Şartlar", Icons.Default.CheckCircle),
 }
