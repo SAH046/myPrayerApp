@@ -8,6 +8,7 @@ import androidx.activity.compose.PredictiveBackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -196,9 +197,9 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                    .width(280.dp)
                     .windowInsetsPadding(WindowInsets.navigationBars)
-                    .padding(start = 16.dp, end = 16.dp, bottom = 24.dp)
+                    .padding(bottom = 24.dp)
             ) {
                 Surface(
                     modifier = Modifier
@@ -209,6 +210,7 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                 ) {
                     NavigationBar(
                         modifier = Modifier
+                            .height(64.dp)
                             .clip(CircleShape)
                             .background(
                                 brush = Brush.horizontalGradient(
@@ -225,27 +227,36 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
                     ) {
                         AppDestinations.entries.forEach { destination ->
                             val isSelected = destination == currentDestination
+                            val iconSize by animateDpAsState(
+                                targetValue = if (isSelected) 28.dp else 24.dp,
+                                label = "IconSize"
+                            )
+                            
                             NavigationBarItem(
                                 selected = isSelected,
                                 onClick = { currentDestination = destination },
                                 icon = {
-                                    Icon(
-                                        destination.icon,
-                                        contentDescription = if (currentLanguage == AppLanguage.GERMAN) destination.labelDe else destination.labelTr
-                                    )
+                                    Box(
+                                        modifier = Modifier
+                                            .size(48.dp)
+                                            .clip(CircleShape)
+                                            .background(
+                                                if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+                                                else Color.Transparent
+                                            ),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            destination.icon,
+                                            contentDescription = if (currentLanguage == AppLanguage.GERMAN) destination.labelDe else destination.labelTr,
+                                            modifier = Modifier.size(iconSize),
+                                            tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                        )
+                                    }
                                 },
-                                label = { 
-                                    Text(
-                                        text = if (currentLanguage == AppLanguage.GERMAN) destination.labelDe else destination.labelTr,
-                                        style = MaterialTheme.typography.labelSmall
-                                    )
-                                },
+                                alwaysShowLabel = false,
                                 colors = NavigationBarItemDefaults.colors(
-                                    selectedIconColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    selectedTextColor = MaterialTheme.colorScheme.onSecondaryContainer,
-                                    unselectedIconColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                                    unselectedTextColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                                    indicatorColor = MaterialTheme.colorScheme.secondaryContainer
+                                    indicatorColor = Color.Transparent
                                 )
                             )
                         }
