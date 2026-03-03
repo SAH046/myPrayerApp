@@ -34,7 +34,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.AppLanguage
+import com.example.myapplication.ui.LocalAnimatedVisibilityScope
 import com.example.myapplication.ui.LocalAppLanguage
+import com.example.myapplication.ui.LocalSharedTransitionScope
 import com.example.myapplication.ui.MemorizationScreen
 import com.example.myapplication.ui.PrayerLearnScreen
 import com.example.myapplication.ui.PrayerReferenceScreen
@@ -71,7 +73,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.SCHRITT_FUER_SCHRITT) }
@@ -147,118 +149,125 @@ fun MyApplicationApp(onLanguageChange: (AppLanguage) -> Unit) {
             }
         }
     ) { innerPadding ->
-        Box(modifier = Modifier.fillMaxSize()) {
-            AnimatedContent(
-                targetState = currentDestination,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = innerPadding.calculateTopPadding()),
-                transitionSpec = {
-                    val direction = if (targetState.ordinal > initialState.ordinal)
-                        AnimatedContentTransitionScope.SlideDirection.Left
-                    else
-                        AnimatedContentTransitionScope.SlideDirection.Right
+        SharedTransitionLayout {
+            Box(modifier = Modifier.fillMaxSize()) {
+                AnimatedContent(
+                    targetState = currentDestination,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(top = innerPadding.calculateTopPadding()),
+                    transitionSpec = {
+                        val direction = if (targetState.ordinal > initialState.ordinal)
+                            AnimatedContentTransitionScope.SlideDirection.Left
+                        else
+                            AnimatedContentTransitionScope.SlideDirection.Right
 
-                    slideIntoContainer(
-                        towards = direction,
-                        animationSpec = tween(400)
-                    ) togetherWith slideOutOfContainer(
-                        towards = direction,
-                        animationSpec = tween(400)
-                    )
-                },
-                label = "TabTransition"
-            ) { destination ->
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    when (destination) {
-                        AppDestinations.MITBETEN -> PrayerLearnScreen(
-                            tts = tts,
-                            isTtsReady = isTtsReady,
-                            modifier = Modifier.fillMaxSize()
+                        slideIntoContainer(
+                            towards = direction,
+                            animationSpec = tween(400)
+                        ) togetherWith slideOutOfContainer(
+                            towards = direction,
+                            animationSpec = tween(400)
                         )
-                        AppDestinations.SCHRITT_FUER_SCHRITT -> PrayerReferenceScreen(
-                            tts = tts,
-                            isTtsReady = isTtsReady,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        AppDestinations.AUSWENDIG_LERNEN -> MemorizationScreen(
-                            tts = tts,
-                            isTtsReady = isTtsReady,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
+                    },
+                    label = "TabTransition"
+                ) { destination ->
+                    CompositionLocalProvider(
+                        LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                        LocalAnimatedVisibilityScope provides this@AnimatedContent
+                    ) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize(),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            when (destination) {
+                                AppDestinations.MITBETEN -> PrayerLearnScreen(
+                                    tts = tts,
+                                    isTtsReady = isTtsReady,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                AppDestinations.SCHRITT_FUER_SCHRITT -> PrayerReferenceScreen(
+                                    tts = tts,
+                                    isTtsReady = isTtsReady,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                AppDestinations.AUSWENDIG_LERNEN -> MemorizationScreen(
+                                    tts = tts,
+                                    isTtsReady = isTtsReady,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                                AppDestinations.VORAUSSETZUNGEN -> PrerequisitesScreen(Modifier.fillMaxSize())
+                            }
+                        }
                     }
                 }
-            }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .width(280.dp)
-                    .windowInsetsPadding(WindowInsets.navigationBars)
-                    .padding(bottom = 24.dp)
-            ) {
-                Surface(
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .shadow(8.dp, CircleShape),
-                    shape = CircleShape,
-                    color = Color.Transparent
+                        .align(Alignment.BottomCenter)
+                        .width(280.dp)
+                        .windowInsetsPadding(WindowInsets.navigationBars)
+                        .padding(bottom = 24.dp)
                 ) {
-                    NavigationBar(
+                    Surface(
                         modifier = Modifier
-                            .height(64.dp)
-                            .clip(CircleShape)
-                            .background(
-                                brush = Brush.horizontalGradient(
-                                    colors = listOf(
-                                        MaterialTheme.colorScheme.surfaceVariant,
-                                        MaterialTheme.colorScheme.secondaryContainer
+                            .fillMaxWidth()
+                            .shadow(8.dp, CircleShape),
+                        shape = CircleShape,
+                        color = Color.Transparent
+                    ) {
+                        NavigationBar(
+                            modifier = Modifier
+                                .height(64.dp)
+                                .clip(CircleShape)
+                                .background(
+                                    brush = Brush.horizontalGradient(
+                                        colors = listOf(
+                                            MaterialTheme.colorScheme.surfaceVariant,
+                                            MaterialTheme.colorScheme.secondaryContainer
+                                        )
                                     )
                                 )
-                            )
-                            .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape),
-                        containerColor = Color.Transparent,
-                        tonalElevation = 0.dp,
-                        windowInsets = WindowInsets(0, 0, 0, 0)
-                    ) {
-                        AppDestinations.entries.forEach { destination ->
-                            val isSelected = destination == currentDestination
-                            val iconSize by animateDpAsState(
-                                targetValue = if (isSelected) 28.dp else 24.dp,
-                                label = "IconSize"
-                            )
-                            
-                            NavigationBarItem(
-                                selected = isSelected,
-                                onClick = { currentDestination = destination },
-                                icon = {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(48.dp)
-                                            .clip(CircleShape)
-                                            .background(
-                                                if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
-                                                else Color.Transparent
-                                            ),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(
-                                            destination.icon,
-                                            contentDescription = if (currentLanguage == AppLanguage.GERMAN) destination.labelDe else destination.labelTr,
-                                            modifier = Modifier.size(iconSize),
-                                            tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
-                                        )
-                                    }
-                                },
-                                alwaysShowLabel = false,
-                                colors = NavigationBarItemDefaults.colors(
-                                    indicatorColor = Color.Transparent
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, CircleShape),
+                            containerColor = Color.Transparent,
+                            tonalElevation = 0.dp,
+                            windowInsets = WindowInsets(0, 0, 0, 0)
+                        ) {
+                            AppDestinations.entries.forEach { destination ->
+                                val isSelected = destination == currentDestination
+                                val iconSize by animateDpAsState(
+                                    targetValue = if (isSelected) 28.dp else 24.dp,
+                                    label = "IconSize"
                                 )
-                            )
+                                
+                                NavigationBarItem(
+                                    selected = isSelected,
+                                    onClick = { currentDestination = destination },
+                                    icon = {
+                                        Box(
+                                            modifier = Modifier
+                                                .size(48.dp)
+                                                .clip(CircleShape)
+                                                .background(
+                                                    if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+                                                    else Color.Transparent
+                                                ),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Icon(
+                                                destination.icon,
+                                                contentDescription = if (currentLanguage == AppLanguage.GERMAN) destination.labelDe else destination.labelTr,
+                                                modifier = Modifier.size(iconSize),
+                                                tint = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                                            )
+                                        }
+                                    },
+                                    alwaysShowLabel = false,
+                                    colors = NavigationBarItemDefaults.colors(
+                                        indicatorColor = Color.Transparent
+                                    )
+                                )
+                            }
                         }
                     }
                 }

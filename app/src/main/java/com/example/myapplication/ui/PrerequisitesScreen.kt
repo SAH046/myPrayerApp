@@ -67,6 +67,8 @@ data class PrerequisiteItem(
 fun PrerequisitesScreen(modifier: Modifier = Modifier) {
     val lang = LocalAppLanguage.current
     var selectedPrerequisite by remember { mutableStateOf<PrerequisiteType?>(null) }
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedTransitionScope found")
 
     val transitionState = remember { SeekableTransitionState(selectedPrerequisite) }
     LaunchedEffect(selectedPrerequisite) {
@@ -109,7 +111,7 @@ fun PrerequisitesScreen(modifier: Modifier = Modifier) {
         )
     }
 
-    SharedTransitionLayout(modifier = modifier) {
+    with(sharedTransitionScope) {
         val transition = rememberTransition(transitionState, label = "PrerequisiteTransition")
         transition.AnimatedContent(
             transitionSpec = {
@@ -121,19 +123,19 @@ fun PrerequisitesScreen(modifier: Modifier = Modifier) {
             }
         ) { targetType ->
             if (targetType == null) {
-                PrerequisiteSelectionScreen(
-                    title = if (lang == AppLanguage.GERMAN) "Voraussetzungen" else "Ön Şartlar",
-                    items = items,
-                    onItemSelected = { selectedPrerequisite = it },
-                    sharedTransitionScope = this@SharedTransitionLayout,
-                    animatedVisibilityScope = this@AnimatedContent
-                )
+                CompositionLocalProvider(LocalAnimatedVisibilityScope provides this@AnimatedContent) {
+                    PrerequisiteSelectionScreen(
+                        title = if (lang == AppLanguage.GERMAN) "Voraussetzungen" else "Ön Şartlar",
+                        items = items,
+                        onItemSelected = { selectedPrerequisite = it }
+                    )
+                }
             } else {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
                         .sharedBounds(
-                            rememberSharedContentState(key = targetType.id),
+                            rememberSharedContentState(key = "prereq_${targetType.id}"),
                             animatedVisibilityScope = this@AnimatedContent
                         )
                 ) {
@@ -156,19 +158,20 @@ fun PrerequisitesScreen(modifier: Modifier = Modifier) {
  * @param title The localized title of the screen.
  * @param items The list of [PrerequisiteItem] to display.
  * @param onItemSelected Callback triggered when an item is clicked.
- * @param sharedTransitionScope The scope for shared element transitions.
- * @param animatedVisibilityScope The scope for the parent animated content.
  */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun PrerequisiteSelectionScreen(
     title: String,
     items: List<PrerequisiteItem>,
-    onItemSelected: (PrerequisiteType) -> Unit,
-    sharedTransitionScope: SharedTransitionScope,
-    animatedVisibilityScope: AnimatedVisibilityScope
+    onItemSelected: (PrerequisiteType) -> Unit
 ) {
     val lang = LocalAppLanguage.current
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No SharedTransitionScope found")
+    val animatedVisibilityScope = LocalAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No AnimatedVisibilityScope found")
+
     with(sharedTransitionScope) {
         Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             Text(
@@ -186,7 +189,7 @@ fun PrerequisiteSelectionScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .sharedBounds(
-                                rememberSharedContentState(key = item.type.id),
+                                rememberSharedContentState(key = "prereq_${item.type.id}"),
                                 animatedVisibilityScope = animatedVisibilityScope
                             )
                             .clickable { onItemSelected(item.type) },
